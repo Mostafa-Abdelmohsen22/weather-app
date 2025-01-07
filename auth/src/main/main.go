@@ -53,7 +53,7 @@ func main() {
 	router.GET("/", health)
 	router.POST("/users/:id", loginUser)
 	router.POST("/users", createUser)
-	router.Run(":8090")
+	router.Run(":8060")
 }
 
 type UserCreds struct {
