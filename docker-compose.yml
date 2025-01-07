@@ -1,13 +1,13 @@
 services:
 
-
+#123
   auth:
     restart: always
     build: ./auth
     depends_on:
       - db
     ports:
-      - "8090:8090"
+      - "8060:8060"
     env_file:
       - ./auth/.env
     networks:
