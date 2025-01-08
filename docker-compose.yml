@@ -12,7 +12,7 @@ services:
       - ./auth/.env
     networks:
       - app-net
-############################
+############################123
 
   ui:
     restart: always
