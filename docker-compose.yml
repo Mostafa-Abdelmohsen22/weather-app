@@ -54,7 +54,7 @@ services:
 
   db:
     restart: always
-    image: mysql:8.0.25
+    image: mysql
     environment:
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_DATABASE: authdb
