@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-auth
+spec:
+  type: ClusterIP
+  selector:
+    app: weather-auth
+  ports:
+  - port: 8080
+    targetPort: 8080

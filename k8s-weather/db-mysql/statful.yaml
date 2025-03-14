@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql  # Ensure this matches the template labels
+  serviceName: mysql
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql  # Match selector labels
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.7
+        env:
+
+        - name: MYSQL_ROOT_PASSWORD
+
+          valueFrom:
+
+            secretKeyRef:
+
+              name: mysql-secret
+
+              key: root-password
+
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-persistent-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"  # Ensure this exists in your cluster
+      resources:
+        requests:
+          storage: 1Gi

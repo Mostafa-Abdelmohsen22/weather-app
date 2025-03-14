@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weatherapp-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weatherapp-ui
+  template:
+    metadata:
+      labels:
+        app: weatherapp-ui
+    spec:
+      containers:
+        - name: weatherapp-ui-con
+          image: ahmedessam404/ui:v1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          env:
+            - name: AUTH_HOST
+              value: weather-auth
+
+            - name: AUTH_PORT
+              value: "8080"
+
+            - name: WEATHER_HOST
+              value: weatherapp-weather  # Fixed typo from "weaterapp-weather"
+
+            - name: WEATHER_PORT
+              value: "5000"
+
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP 
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http 
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http 
