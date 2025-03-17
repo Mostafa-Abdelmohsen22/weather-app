@@ -16,7 +16,7 @@ spec:
       - name: weather-auth
     
 
-        image: ahmedessam404/auth
+        image: ahmedessam404/auth:v1
         resources:
           limits:
             memory: "128Mi"
