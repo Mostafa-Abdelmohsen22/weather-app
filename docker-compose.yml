@@ -7,7 +7,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8060:8060"
+      - "8080:8080"
     env_file:
       - ./auth/.env
     networks:
@@ -23,7 +23,7 @@ services:
     env_file:
       - ./ui/.env
     ports:
-      - "3010:3010"
+      - "3000:3000"
     networks:
       - app-net
    
