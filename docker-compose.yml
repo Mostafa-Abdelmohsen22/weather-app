@@ -1,6 +1,5 @@
 services:
 
-
   auth:
     restart: always
     build: ./auth
