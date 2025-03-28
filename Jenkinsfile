@@ -1,19 +1,19 @@
 pipeline {
     agent any 
     stages {
-        stage('Build') { 
+        stage('Git') { 
             steps {
-               echo "Completed Build Done ...................."
+                git branch: 'main', url: 'https://github.com/Ahmed363-Essam/simple-java-app'
             }
         }
-        stage('Test') { 
+        stage('MavenBuild') { 
             steps {
-               echo "Completed Test Done ...................."
+                sh "mvn clean package"
             }
         }
         stage('Deploy') { 
             steps {
-               echo "Completed Deploy Done ...................."
+                echo 'Deploy Completed ..........................' 
             }
         }
     }
