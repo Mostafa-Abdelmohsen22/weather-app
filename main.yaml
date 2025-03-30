@@ -19,80 +19,80 @@
       
       
   tasks:
-  #   - name: Install aptitude
-  #     apt:
-  #       name: aptitude
-  #       state: latest
-  #       update_cache: true
+    - name: Install aptitude
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
 
-  #   - name: Install required system packages
-  #     apt:
-  #       pkg:
-  #         - apt-transport-https
-  #         - ca-certificates
-  #         - curl
-  #         - software-properties-common
-  #         - python3-pip
-  #         - virtualenv
-  #         - python3-setuptools
-  #       state: latest
-  #       update_cache: true
+    - name: Install required system packages
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
 
-  #   - name: Add Docker GPG apt Key
-  #     apt_key:
-  #       url: https://download.docker.com/linux/ubuntu/gpg
-  #       state: present
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
 
-  #   - name: Add Docker Repository
-  #     apt_repository:
-  #       repo: deb https://download.docker.com/linux/ubuntu jammy stable
-  #       state: present
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
 
-  #   - name: Update apt and install docker-ce
-  #     apt:
-  #       name: docker-ce
-  #       state: latest
-  #       update_cache: true
+    - name: Update apt and install docker-ce
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
 
-  #   - name: Install Docker Module for Python
-  #     pip:
-  #       name: docker
-  #       virtualenv: /opt/ansible-venv
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+        virtualenv: /opt/ansible-venv
 
-  #   - name: Pull default Docker image
-  #     community.docker.docker_image:
-  #       name: "{{ default_container_image }}"
-  #       source: pull
+    - name: Pull default Docker image
+      community.docker.docker_image:
+        name: "{{ default_container_image }}"
+        source: pull
 
-  #   - name: Create default containers
-  #     community.docker.docker_container:
-  #       name: "{{ default_container_name }}{{ item }}"
-  #       image: "{{ default_container_image }}"
-  #       command: "{{ default_container_command }}"
-  #       state: present
-  #     with_sequence: count={{ container_count }}
+    - name: Create default containers
+      community.docker.docker_container:
+        name: "{{ default_container_name }}{{ item }}"
+        image: "{{ default_container_image }}"
+        command: "{{ default_container_command }}"
+        state: present
+      with_sequence: count={{ container_count }}
 
 
   # creaet a weather app directory 
 
-    # - name: Create weather-app directory
-    #   ansible.builtin.file:
-    #     path: "{{ destination_file }}"
-    #     state: directory
-    #     mode: '0755'
+    - name: Create weather-app directory
+      ansible.builtin.file:
+        path: "{{ destination_file }}"
+        state: directory
+        mode: '0755'
 
 
 
-    # - name: Copy directories and file
-    #   ansible.builtin.copy:
-    #     src: "{{ item }}"
-    #     dest: "{{ destination_file }}"
-    #     mode: "0755"
-    #     directory_mode: "0755"
-    #     remote_src: no  # Ensures the file is copied from the controller, not the remote machine
-    #   loop: "{{ copy_files }}"
-    #   register: copy_output
-    # - debug: var=copy_output
+    - name: Copy directories and file
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ destination_file }}"
+        mode: "0755"
+        directory_mode: "0755"
+        remote_src: no  # Ensures the file is copied from the controller, not the remote machine
+      loop: "{{ copy_files }}"
+      register: copy_output
+    - debug: var=copy_output
 
 
     - name: Make A Composer Up
