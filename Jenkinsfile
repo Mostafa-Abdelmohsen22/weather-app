@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment{
-        ANSIBLE_PRIVATE_KEY=credentials('ansible-weather-app-private-key')
-    }
-
     stages {
         stage('Checkout Code') {
             steps {
@@ -12,9 +8,19 @@ pipeline {
             }
         }
 
-        stage('Execute Ansible') {
+        stage('Step 3: Deploy Application with Ansible') { 
             steps {
-                sh 'ansible-playbook -i inventory.ini --private-key=$ANSIBLE_PRIVATE_KEY main.yaml'
+                script {
+                    echo '🔑 Setting up SSH for deployment...'
+                    sshagent(['weather-app']) {
+                        sh """
+                        echo '🚀 Running Ansible playbook...'
+                        ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory.ini main.yaml\
+                        --private-key \$SSH_AUTH_SOCK
+                        """
+                    }
+                    echo '✅ Deployment completed!'
+                }
             }
         }
     }
