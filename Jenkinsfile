@@ -12,8 +12,11 @@ pipeline {
         
         stage('Execute Ansible') { 
             steps {
-                sh 'ANSIBLE_PRIVATE_KEY'
+                sh '''
+                ansible-playbook -i inventory.ini --private-key="$ANSIBLE_PRIVATE_KEY" main.yaml
+                '''
             }
         }
     }
 }
+
