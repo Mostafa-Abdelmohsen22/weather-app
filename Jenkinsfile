@@ -13,9 +13,7 @@ pipeline {
         stage('Execute Ansible') { 
             steps {
                 sh '''
-                echo "Testing SSH Connection..."
-                ls -l "$ANSIBLE_PRIVATE_KEY"
-                ssh -i "$ANSIBLE_PRIVATE_KEY" -o StrictHostKeyChecking=no root@167.172.184.59 "echo SSH Connection Successful"
+                ansible-playbook -i inventory.ini --private-key="$ANSIBLE_PRIVATE_KEY" main.yaml
                 '''
             }
         }
