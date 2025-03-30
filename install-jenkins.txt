@@ -18,3 +18,7 @@ chmod +x ~/.docker/cli-plugins/docker-compose
 
 // github instructions
 https://github.com/khalednoh/instrctions
+
+
+// run as sudo
+docker exec  -it --user root jenkins bash 

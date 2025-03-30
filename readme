@@ -2,3 +2,12 @@ ssh -i /home/ahmed/application/kubernets/ahmed-fakharany/weather-app/weather-app
 ansible droplets -i inventory.ini -a"date"
 
 ansible-playbook -i inventory.ini main.yaml
+
+
+
+
+
+
+
+
+
