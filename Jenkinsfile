@@ -8,7 +8,6 @@ pipeline {
             }
         }
 
-    stages {
         stage('Execute Ansible') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ansible-weather-app-private-key', keyFileVariable: 'SSH_KEY')]) {
