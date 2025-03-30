@@ -8,10 +8,6 @@ pipeline {
             }
         }
 
-        stage('Execute Ansible') {
-            steps {
-               
-            }
-        }
+
     }
 }
