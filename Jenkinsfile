@@ -1,5 +1,8 @@
 pipeline {
     agent any 
+    environment{
+        ANSIBLE_PRIVATE_KEY=credentials('ansible-weather-app-private-key')
+    }
     stages {
         stage('Build') { 
             steps {
@@ -8,7 +11,8 @@ pipeline {
         }
     stage('Execute Ansible') { 
             steps {
-               ansiblePlaybook credentialsId: 'private-ket-p', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory.ini', playbook: 'main.yaml', vaultTmpPath: ''
+            //    ansiblePlaybook credentialsId: 'private-ket-p', disableHostKeyChecking: true, installation: 'ansible', inventory: 'inventory.ini', playbook: 'main.yaml', vaultTmpPath: ''
+               ansible-playbook -i inventory.ini --private-key=$ANSIBLE_PRIVATE_KEY main.yaml
             }
         }
     }
