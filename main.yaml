@@ -73,26 +73,26 @@
   #     with_sequence: count={{ container_count }}
 
 
-  # # creaet a weather app directory 
+  # creaet a weather app directory 
 
-  #   - name: Create weather-app directory
-  #     ansible.builtin.file:
-  #       path: "{{ destination_file }}"
-  #       state: directory
-  #       mode: '0755'
+    - name: Create weather-app directory
+      ansible.builtin.file:
+        path: "{{ destination_file }}"
+        state: directory
+        mode: '0755'
 
 
 
-    # - name: Copy directories and file
-    #   ansible.builtin.copy:
-    #     src: "{{ item }}"
-    #     dest: "{{ destination_file }}"
-    #     mode: "0755"
-    #     directory_mode: "0755"
-    #     remote_src: no  # Ensures the file is copied from the controller, not the remote machine
-    #   loop: "{{ copy_files }}"
-    #   register: copy_output
-    # - debug: var=copy_output
+    - name: Copy directories and file
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ destination_file }}"
+        mode: "0755"
+        directory_mode: "0755"
+        remote_src: no  # Ensures the file is copied from the controller, not the remote machine
+      loop: "{{ copy_files }}"
+      register: copy_output
+    - debug: var=copy_output
 
     - name: Make A Composer build
       ansible.builtin.command:
