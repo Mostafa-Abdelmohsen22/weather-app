@@ -14,7 +14,7 @@ services:
 ############################123
 
   ui:
-    restart: always
+    # restart: always
     build: ./ui
     depends_on:
       - auth

@@ -7,14 +7,7 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name: 'auth'
-    static_configs:
-      - targets: ['auth:8085']
 
   - job_name: 'ui'
     static_configs:
-      - targets: ['ui:3001']
-
-  - job_name: 'weather'
-    static_configs:
-      - targets: ['weather:5000']
+      - targets: ['weather-app-ui-1:3001']

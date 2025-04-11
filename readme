@@ -12,4 +12,4 @@ docker run -d   --name prometheus-docker   -p 9090:9090   --mount type=bind,sour
 
 
 grafana 
-docker run -d --name grafana-docker -p 3001:3001 -v grafana_data:/var/lib/grafana --network weather-app_app-net grafana/grafana
+docker run -d --name grafana-docker -p 3000:3000 -v grafana_data:/var/lib/grafana --network weather-app_app-net grafana/grafana
