@@ -38,13 +38,7 @@ const register = new promClient.Registry();
 
 promClient.collectDefaultMetrics({ register });
 
-const httpRequestCounter = new promClient.Counter({
-    name: 'http_requests_total',
-    help: 'Total number of HTTP requests',
-    registers: [register],
-    labelNames: ['method', 'path', 'status'],
-});
-  
+
   app.get('/metrics', async (req, res) => {
     res.set('Content-Type', register.contentType);
     res.send(await register.metrics());
@@ -92,7 +86,7 @@ app.post("/signup", (signupreq, signupres) => {
 })
 
 app.get('/', authenticateToken, (req, res) => {
-    requestCounter.labels(req.method, req.path, res.statusCode.toString()).inc()
+
 
     res.sendFile(path.join((__dirname + "/public//index.html")))
 })
