@@ -7,7 +7,9 @@ ansible-playbook -i inventory.ini main.yaml
 
 
 
+premethus 
+docker run -d   --name prometheus-docker   -p 9090:9090   --mount type=bind,source="$(pwd)/prometheus.yml",target=/etc/prometheus/prometheus.yml   --network weather-app_app-net   prom/prometheus
 
 
-
-
+grafana 
+docker run -d --name grafana-docker -p 3001:3001 -v grafana_data:/var/lib/grafana --network weather-app_app-net grafana/grafana
