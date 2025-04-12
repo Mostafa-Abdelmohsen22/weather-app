@@ -37,6 +37,8 @@ services:
       - app-net
 
 
+
+
   
   # nginx:
   #   image: nginx
@@ -69,3 +71,4 @@ networks:
     driver: bridge
 volumes:
   db-data:
+  # dsfdsfdsf
