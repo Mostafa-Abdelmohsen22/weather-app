@@ -1,4 +1,4 @@
-ssh -i /home/ahmed/application/kubernets/ahmed-fakharany/weather-app/weather-app/ahmed-essam-404 root@167.172.184.59
+ssh -i /home/ahmed/application/kubernets/ahmed-fakharany/weather-app/weather-app/ahmed-essam-404 root@161.35.206.183 
 ansible droplets -i inventory.ini -a"date"
 
 ansible-playbook -i inventory.ini main.yaml
