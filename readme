@@ -1,15 +1,169 @@
+# 🚀 Weather App - DevOps Toolchain
+
+## 🧰 Tools Used in This Project
+
+1. Docker  
+2. Docker Compose  
+3. Portainer  
+4. Prometheus  
+5. Grafana  
+6. Jenkins  
+7. Ansible (for provisioning on DigitalOcean)  
+8. Kubernetes (K8s)  
+
+---
+
+## 🐳 Docker Installation on Virtual Machine
+
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+mkdir -p $DOCKER_CONFIG/cli-plugins
+curl -SL https://github.com/docker/compose/releases/download/v2.35.0/docker-compose-linux-x86_64 \
+-o $DOCKER_CONFIG/cli-plugins/docker-compose
+sudo chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+
+# Verify installation
+docker compose version
+
+
+🛠️ Build & Run Application
+
+# Build Docker image
+docker build -t dockerhub-username/weather-app:latest .
+
+# Run the container
+docker run -p 5000:5000 dockerhub-username/weather-app:latest
+
+Push to Docker Hub
+
+docker login
+docker push dockerhub-username/weather-app:latest
+
+
+# Build and run with Docker Compose
+docker compose build
+docker compose up -d
+
+
+
+
+
+########################################################
+📦 Run Portainer
+
+docker volume create portainer_data
+
+docker run -d -p 8000:8000 -p 9000:9000 \
+  --name portainer --restart=always \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  portainer/portainer-ce:lts
+
+
+########################################################
+📊 Install Prometheus
+
+docker run -d \
+  --name prometheus-docker \
+  -p 9090:9090 \
+  --mount type=bind,source="$(pwd)/prometheus.yml",target=/etc/prometheus/prometheus.yml \
+  --network weather-app_app-net \
+  prom/prometheus
+
+
+
+## install grafana 
+📈 Install Grafana
+
+docker run -d --name grafana-docker -p 3000:3000 \
+  -v grafana_data:/var/lib/grafana \
+  --network weather-app_app-net \
+  grafana/grafana
+#################################################################################
+install  jenkins 
+
+docker run -d \
+  --name jenkins \
+  -p 8080:8080 -p 50000:50000 \
+  -v jenkins_home:/var/jenkins_home \
+  jenkins/jenkins:lts
+
+
+1- manage kenkins -> plugins -> install this plugins 
+    ansible
+    ssh
+    docker
+    git 
+    maven 
+
+
+🔗 GitHub Webhook Integration with Jenkins
+Jenkins Side:
+Install GitHub Integration Plugin
+
+Go to your job → Build Triggers → Enable GitHub hook trigger for GITScm polling
+
+GitHub Side:
+Go to your GitHub repo → Settings
+
+Click Webhooks → Add webhook
+
+Payload URL: http://<your_jenkins_ip>:8080/github-webhook/ (don't forget the trailing slash /)
+
+Content Type: application/json
+
+Event: Select Just the push event
+
+
+######################################################
+🔧 Create Jenkins Pipeline Project
+Select Pipeline project type
+
+Under Build Triggers, enable SCM trigger and set GitHub repo URL
+
+Define branch and use Pipeline Syntax to generate steps
+
+Repeat similar setup for Ansible jobs
+
+
+    repeat this step on ansible too 
+######################################################
+
+🤖 Ansible + DigitalOcean Integration
+Steps:
+Generate SSH key
+
+Add public key to DigitalOcean droplet
+
+Create main.yaml to automate tool installation
+
+Create inventory and use playbooks to connect
+
+ssh -i private key path root@ipv4
 ssh -i /home/ahmed/application/kubernets/ahmed-fakharany/weather-app/weather-app/ahmed-essam-404 root@161.35.206.183 
-ansible droplets -i inventory.ini -a"date"
+
 
 ansible-playbook -i inventory.ini main.yaml
 
+ansible droplets -i inventory.ini -a"date"
 
 
+###########################################################
+1- to run  a db 
+kubectl apply -f headless-service.yaml
+kubectl apply -f statful.yaml
+kubectl apply -f init-jobyaml
 
+2- to run a auth deployment 
+kubectl apply -f auth-deployment.yaml
+kubectl apply -f auth-service.yaml
 
-premethus 
-docker run -d   --name prometheus-docker   -p 9090:9090   --mount type=bind,source="$(pwd)/prometheus.yml",target=/etc/prometheus/prometheus.yml   --network weather-app_app-net   prom/prometheus
+3- to run a weather 
 
+kubectl apply -f deployment.yaml
+kubectl apply -f weather-service.yaml
 
-grafana 
-docker run -d --name grafana-docker -p 3000:3000 -v grafana_data:/var/lib/grafana --network weather-app_app-net grafana/grafana
+3- to run a ui 
+
+kubectl apply -f deployment-ui.yaml
+kubectl apply -f service-ui.yaml
+kubectl apply -f ingress.yaml
