@@ -10,7 +10,7 @@
 6. Jenkins  
 7. Ansible (for provisioning on DigitalOcean)  
 8. Kubernetes (K8s)  
-
+9.AWS
 ---
 
 ## 🐳 Docker Installation on Virtual Machine
